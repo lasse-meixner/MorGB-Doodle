@@ -172,6 +172,11 @@ function loop() {
     doodle.x = -doodle.width;
   }
 
+  // reload page if falls
+  if (doodle.y > canvas.height) {
+    window.location.reload()
+  }
+
   // draw platforms
   platforms.forEach(function(platform) {
     context.drawImage(platformImg,platform.x, platform.y, platformWidth, platformHeight);
