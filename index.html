@@ -23,12 +23,30 @@
 <body>
 <canvas width="600" height="800" id="game"></canvas>
 <script>
+ 
+ // adjust size for mobile applications
+ (function() {
+    // We are resizing for mobile devices only. For other devices, the
+    // dimensions will be stuck at 600 x 800.
+    var win = window,
+        w = win.innerWidth,
+        h = win.innerHeight,
+        canvas = document.getElementById('game');
+    
+    if( win.navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/i) ) {
+      canvas.height = h;
+      canvas.width  = w;
+    }
+  })();
+
 const canvas = document.getElementById('game');
 const context = canvas.getContext('2d');
 
+const hAdj = canvas.height/800
+const wAdj = canvas.width/600
 // width and height of each platform and where platforms start
-const platformWidth = 85;
-const platformHeight = 15;
+const platformWidth = 85*wAdj;
+const platformHeight = 15*hAdj;
 const platformStart = canvas.height - 50;
 
 // platform graphics
@@ -44,13 +62,13 @@ const doodleImg_right = new Image();
 doodleImg_right.src = "assets/giraffe2_right.png";
 
 // player physics
-const gravity = 0.33;
-const drag = 0.3;
-const bounceVelocity = -12.5;
+const gravity = 0.33*hAdj;
+const drag = 0.3*wAdj;
+const bounceVelocity = -12.5*hAdj;
 
 // minimum and maximum vertical space between each platform
-let minPlatformSpace = 45;
-let maxPlatformSpace = 100;
+let minPlatformSpace = 45*hAdj;
+let maxPlatformSpace = 100*hAdj;
 
 // information about each platform. the first platform starts in the
 // bottom middle of the screen
@@ -91,10 +109,10 @@ while (y > 0) {
 
 // the doodle jumper
 const doodle = {
-  width: 50,
-  height: 80,
+  width: 70*wAdj,
+  height: 90*hAdj,
   x: canvas.width / 2 - 20,
-  y: platformStart - 80,
+  y: platformStart - 90*hAdj,
 
   // velocity
   dx: 0,
@@ -129,8 +147,8 @@ function loop() {
       })
 
       // add a bit to the min/max platform space as the player goes up
-      minPlatformSpace += 0.5;
-      maxPlatformSpace += 0.5;
+      minPlatformSpace += 0.5*hAdj;
+      maxPlatformSpace += 0.5*hAdj;
 
       // cap max space
       maxPlatformSpace = Math.min(maxPlatformSpace, canvas.height / 2);
@@ -227,14 +245,14 @@ document.addEventListener('keydown', function(e) {
   if (e.which === 37) {
     keydown = true;
     playerDir = -1;
-    doodle.dx = -4;
+    doodle.dx = -5*wAdj;
 
   }
   // right arrow key
   else if (e.which === 39) {
     keydown = true;
     playerDir = 1;
-    doodle.dx = 4;
+    doodle.dx = 5*wAdj;
   }
 });
 
@@ -251,12 +269,12 @@ document.addEventListener('touchstart', function(e) {
     if (touch.pageX < canvas.width/2) {
       keydown = true;
       playerDir = -1;
-      doodle.dx = -4;
+      doodle.dx = -5*wAdj;
     }
     else if (touch.pageX >= canvas.width/2) {
       keydown = true;
     playerDir = 1;
-    doodle.dx = 4;
+    doodle.dx = 5*wAdj;
     }
   }
 })
