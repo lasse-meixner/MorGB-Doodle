@@ -193,7 +193,9 @@ function loop() {
 
   // reload page if falls
   if (doodle.y > canvas.height) {
-    window.location.reload()
+    setTimeout(function(){
+      window.location.href = window.location.href;
+    });
   }
 
   // draw platforms
