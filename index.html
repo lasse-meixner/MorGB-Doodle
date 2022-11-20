@@ -37,11 +37,11 @@ platformImg.src = "assets/doodle-jump-platform.png";
 
 // doodle graphics
 const doodleImg_left = new Image();
-doodleImg_left.src = "assets/giraffe2_left.png";
+doodleImg_left.src = "assets/giraffe3_left.png";
 const doodleImg_straight = new Image();
 doodleImg_straight.src = "assets/giraffe3_small.png"
 const doodleImg_right = new Image();
-doodleImg_right.src = "assets/giraffe2_right.png";
+doodleImg_right.src = "assets/giraffe3_right.png";
 
 // player physics
 const gravity = 0.33;
@@ -265,8 +265,20 @@ document.addEventListener('touchend', function(e) {
   keydown = false;
 })
 
+
 // start the game
+// function menu() {
+//   while (gameover) {
+//   requestAnimationFrame(menu);
+//   context.clearRect(0,0,canvas.width,canvas.height);
+//   context.fillText("Press to start",canvas.width/2 - 50, canvas.height/2-20);
+//   }
+//   if (keydown) {
+//     gameover = false
+//   }
+// }
 requestAnimationFrame(loop);
+
 </script>
 </body>
 </html>
