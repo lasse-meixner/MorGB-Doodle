@@ -65,6 +65,7 @@ doodleImg_right.src = "assets/giraffe3_right.png";
 const gravity = 0.33*hAdj;
 const drag = 0.3*wAdj;
 const bounceVelocity = -12.5*hAdj;
+const slack = 5*hAdj //for when a platform is "reached"
 
 // minimum and maximum vertical space between each platform
 let minPlatformSpace = 45*hAdj;
@@ -109,10 +110,10 @@ while (y > 0) {
 
 // the doodle jumper
 const doodle = {
-  width: 70*wAdj,
-  height: 100*hAdj,
+  width: 90*wAdj,
+  height: 130*hAdj,
   x: canvas.width / 2 - 20,
-  y: platformStart - 100*hAdj,
+  y: platformStart - 150*hAdj,
 
   // velocity
   dx: 0,
@@ -202,17 +203,17 @@ function loop() {
     // make doodle jump if it collides with a platform from above
     if (
       // doodle is falling
-      doodle.dy > 0 &&
+      doodle.dy >= 0 &&
 
-      // doodle was previous above the platform
+      // doodle feet were previous above the platform
       prevDoodleY + doodle.height <= platform.y &&
 
       // doodle collides with platform
       // (Axis Aligned Bounding Box [AABB] collision check)
       doodle.x < platform.x + platformWidth &&
       doodle.x + doodle.width > platform.x &&
-      doodle.y < platform.y + platformHeight &&
-      doodle.y + doodle.height > platform.y
+      doodle.y < platform.y + platformHeight + slack &&
+      doodle.y + doodle.height > platform.y - slack
     ) {
       // reset doodle position so it's on top of the platform
       doodle.y = platform.y - doodle.height;
