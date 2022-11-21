@@ -71,6 +71,9 @@ const slack = 5*hAdj //for when a platform is "reached"
 let minPlatformSpace = 45*hAdj;
 let maxPlatformSpace = 100*hAdj;
 
+//score
+let score = 0;
+
 // information about each platform. the first platform starts in the
 // bottom middle of the screen
 let platforms = [{
@@ -133,11 +136,12 @@ function loop() {
   // apply gravity to doodle
   doodle.dy += gravity;
 
-  // if doodle reaches the middle of the screen, move the platforms down
+  // if doodle reaches the middle of the screen, move the platforms down & add to score
   // instead of doodle up to make it look like doodle is going up
   if (doodle.y < canvas.height / 2 && doodle.dy < 0) {
     platforms.forEach(function(platform) {
       platform.y += -doodle.dy;
+      score += - Math.round(doodle.dy/10);
     });
 
     // add more platforms to the top of the screen as doodle moves up
@@ -222,6 +226,10 @@ function loop() {
       doodle.dy = bounceVelocity;
     }
   });
+
+  // draw score
+  context.font = "30px Comic Sans MS";
+  context.fillText("Score: " + score,5,30)
 
   // draw doodle
   if (playerDir > 0) {
